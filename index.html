@@ -114,9 +114,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </header>
 
   <div id="profile-cover" class="cover shallow-bg img-responsive"> 
+    <div id="cover-bg-a" class="cover-bg-layer" aria-hidden="true"></div>
+    <div id="cover-bg-b" class="cover-bg-layer" aria-hidden="true"></div>
     <div id="profile-namecard" class="profile-wrapper wrapper-light">
       <div id="my-pic" class="profile-col profile-col-1">
-        <img id="profile-avatar" src="images/myself.jpg" alt="Me" class="circle-img border-dark"-/>
+        <img id="profile-avatar" src="images/myself.png" alt="Haoran Du" class="circle-img border-dark" style="cursor:pointer;" title="Click to switch photo" />
+        <div class="avatar-hint" aria-hidden="true">
+          <img class="avatar-hint-img" src="images/click_here_sign_transparent.png" alt="" />
+        </div>
       </div>
       <div id="my-contact" class="profile-col profile-col-2">
         <div id="my-name" class="text-grey-dark">
@@ -219,6 +224,93 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   </script> -->
 
+<script type="text/javascript">
+  (function () {
+    var avatar = document.getElementById("profile-avatar");
+    if (avatar) {
+      var photoDefault = "images/myself.png";
+      var photoFormal = "images/myself_formal.jpg";
+      var showingFormal = false;
+      var switching = false;
+
+      avatar.addEventListener("click", function () {
+        if (switching) return;
+        switching = true;
+        avatar.classList.add("avatar-fading");
+
+        window.setTimeout(function () {
+          showingFormal = !showingFormal;
+          avatar.src = showingFormal ? photoFormal : photoDefault;
+        }, 220);
+      });
+
+      avatar.addEventListener("load", function () {
+        if (!switching) return;
+        window.requestAnimationFrame(function () {
+          avatar.classList.remove("avatar-fading");
+          switching = false;
+        });
+      });
+
+      avatar.addEventListener("error", function () {
+        avatar.classList.remove("avatar-fading");
+        switching = false;
+      });
+    }
+
+    var cover = document.getElementById("profile-cover");
+    var layerA = document.getElementById("cover-bg-a");
+    var layerB = document.getElementById("cover-bg-b");
+    if (!cover || !layerA || !layerB) return;
+
+    var backgroundImages = [
+      "images/background/retina/jiangwan.jpg",
+      "images/background/retina/fudan_1.jpg",
+      "images/background/retina/fudan_2.jpg",
+      "images/background/retina/fudan_3.jpg",
+      "images/background/retina/fudan_4.jpg",
+      "images/background/retina/fudan_5.jpg",
+      "images/background/retina/fudan_6.jpg",
+      "images/background/retina/fudan_7_landscape.jpg",
+      "images/background/retina/fudan_8_landscape.jpg",
+      "images/background/retina/fudan_10.jpg"
+    ];
+    var slideIntervalMs = 3000;
+
+    backgroundImages.forEach(function (src) {
+      var image = new Image();
+      image.src = src;
+    });
+
+    layerA.style.backgroundImage = 'url("' + backgroundImages[0] + '")';
+    layerA.classList.add("active");
+
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    var activeLayer = layerA;
+    var idleLayer = layerB;
+    var index = 1;
+
+    function rotateBackground() {
+      var nextImage = backgroundImages[index % backgroundImages.length];
+      idleLayer.style.backgroundImage = 'url("' + nextImage + '")';
+
+      idleLayer.classList.add("active");
+      activeLayer.classList.remove("active");
+
+      var temp = activeLayer;
+      activeLayer = idleLayer;
+      idleLayer = temp;
+
+      index += 1;
+    }
+
+    window.setInterval(rotateBackground, slideIntervalMs);
+  })();
+</script>
+
 <div class="page-content">
 <div class="wrapper">
 <div id="bio" class="bio">
@@ -229,12 +321,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </h1>
   <div class="bio-body" style="overflow:hidden;">
     <p>
-      I am an researcher in <a href="https://baike.baidu.com/item/%E4%BA%AC%E4%B8%9C%E6%8E%A2%E7%B4%A2%E7%A0%94%E7%A9%B6%E9%99%A2/58115352" target="_blank">JD Explore Academy</a>, where I focus on embodied AI.
-I got my Ph.D. at the <a href="http://ri.ust.hk" target="_blank">Robotics Institute</a>, <a href="https://www.ust.hk" target="_blank">The Hong Kong University of Science and Technology</a>, where I work on computer vision and autonomous driving under the supervision of <a href="https://cqf.io/" target="_blank">Prof. Qifeng Chen</a> and <a href="https://scholar.google.com/citations?user=Oo7c22wAAAAJ&hl=zh-CN" target="_blank">Prof. Michael Yu Wang</a>.
- 
-I'm always looking for related colaboration. If you are interested to chat with me, feel free to drop me an <a href="mailto:hrdu24@m.fudan.edu.cn" target="_blank">email</a>.
-
-      <br>
+      I am currently a Ph.D. student in the <a href="https://fudan-datanet.mysxl.cn/" target="_blank" rel="noopener noreferrer">DataNET Group</a> at the <a href="https://ai.fudan.edu.cn/" target="_blank" rel="noopener noreferrer">College of Computer Science and Artificial Intelligence, Fudan University</a>, advised by <a href="https://chenyang03.wordpress.com/" target="_blank" rel="noopener noreferrer">Prof. Yang Chen</a> and <a href="https://faculty.fudan.edu.cn/wangxin/zh_CN" target="_blank" rel="noopener noreferrer">Prof. Xin Wang</a>.
+      I received my B.Eng. degree in Water Supply and Drainage Science and Engineering from the <a href="https://sese.tongji.edu.cn/" target="_blank" rel="noopener noreferrer">School of Environmental Science and Engineering, Tongji University</a>, in 2024.<br>
     </p>
 
     <div style="width: 50%; float:left">
@@ -243,17 +331,10 @@ I'm always looking for related colaboration. If you are interested to chat with 
 		    <strong>Interests</strong>
 			</h3>
       <ul>
-        <!-- <li><b>Multi-modality</b></li> -->
-        <li><b>Embodied AI, Multi-modality LLM</b></li>
-        <a href="https://arxiv.org/pdf/2511.17502" target="_blank">[RynnVLA-002]</a><a href="https://arxiv.org/pdf/2506.21539" target="_blank">[WorldVLA]</a><a href="https://arxiv.org/pdf/2509.15212" target="_blank">[RynnVLA-001]</a><a href="https://neurips.cc/virtual/2025/poster/120127" target="_blank">[HiMaCon]</a><a href="https://arxiv.org/pdf/2509.19460" target="_blank">[SEIL]</a><a href="https://arxiv.org/pdf/2503.03464" target="_blank">[Survey]</a><a href="https://arxiv.org/abs/2402.10534" target="_blank">[VLP]</a><a href="https://ieeexplore.ieee.org/abstract/document/9681231" target="_blank">[VPN]</a>
-        <li><b>Autonomous Driving</b></li>
-        <a href="https://arxiv.org/abs/2403.13261" target="_blank">[STC]</a><a href="https://arxiv.org/abs/2207.01452" target="_blank">[REAL]</a><a href="https://arxiv.org/abs/2108.04562" target="_blank">[DML]</a><a href="https://arxiv.org/abs/2112.01135" target="_blank">[MLUC]</a>
-        <li><b>3D Segmentation</b></li>
-        <a href="https://arxiv.org/abs/2409.08083" target="_blank">[SimMAT]</a><a href="https://arxiv.org/abs/2403.17010" target="_blank">[Calib3D]</a><a href="https://arxiv.org/abs/2305.14207" target="_blank">[Segment Any RGBD]</a><a href="https://arxiv.org/abs/2306.09347" target="_blank">[Segment Any Point Cloud]</a><a href="https://arxiv.org/abs/2405.10305" target="_blank">[PSG-4D]</a><a href="https://arxiv.org/abs/2307.04091" target="_blank">[CMDFusion]</a>
-        <li><b>Open-set Recognition</b></li>
-        <a href="https://openreview.net/forum?id=xLr0I_xYGAs" target="_blank">[UOSR]</a><a href="https://arxiv.org/abs/2303.15467" target="_blank">[PSL]</a>
-        <li><b>Continual Learning</b></li>
-        <a href="https://arxiv.org/abs/2403.08568" target="_blank">[CPrompt]</a><a href="https://arxiv.org/abs/2211.00833" target="_blank">[FrameMaker]</a><a href="https://ieeexplore.ieee.org/abstract/document/9665922" target="_blank">[KD-TIL]</a>
+        <li><b>Social Bot Detection</b></li>
+        <li><b>Efficient Graph Computing and Graph Learning</b></li>
+        <li><b>Foundation Agents</b></li>
+        <li><b>Deep Research</b></li>
       </ul>
     </div>
 

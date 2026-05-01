@@ -46,7 +46,7 @@ body {
 
 body:after {
     display: none;
-    content: url("images/background/background1.JPG") url("images/background/background2.jpg")
+    content: url("images/background/retina/jiangwan.jpg") url("images/background/retina/fudan_1.jpg")
 }
 
 h1,
@@ -681,6 +681,8 @@ pre>code {
     max-width: 100%;
     height: 320px;
     z-index: initial;
+    position: relative;
+    overflow: hidden;
     margin-right: auto;
     margin-left: auto;
     padding-right: 0px;
@@ -704,17 +706,43 @@ pre>code {
 
 .shallow-bg {
     /* background-image: url("images/background/background1.JPG"); */
-    background-image: url("images/background/background_hkust_2.jpg");
+    background-image: url("images/background/retina/jiangwan.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center
 }
 
 .deep-bg {
-    background-image: url("images/background/background2.JPG");
+    background-image: url("images/background/retina/fudan_3.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center
+}
+
+
+.cover-bg-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    transform: scale(1.008);
+    transform-origin: center center;
+    opacity: 0;
+    transition: opacity 0.95s ease-in-out, transform 3.0s ease-out;
+    will-change: opacity, transform
+}
+
+.cover-bg-layer.active {
+    opacity: 1;
+    transform: scale(1.036)
+}
+
+#profile-namecard {
+    position: relative;
+    z-index: 2
 }
 
 .profile-wrapper {
@@ -787,9 +815,23 @@ pre>code {
 .circle-img {
     margin: 0px auto;
     width: 168px;
+    height: 168px;
     border-width: 4px;
     border-style: solid;
-    border-radius: 50%
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center center;
+    transform-origin: center center;
+    transition: opacity 0.52s cubic-bezier(0.22, 0.61, 0.36, 1),
+                transform 0.72s cubic-bezier(0.22, 0.61, 0.36, 1),
+                filter 0.52s ease;
+    will-change: opacity, transform, filter
+}
+
+.circle-img.avatar-fading {
+    opacity: 0;
+    transform: scale(0.965);
+    filter: blur(0.35px) saturate(0.92)
 }
 
 .border-dark {
@@ -2082,3 +2124,54 @@ div.paginate-container li:nth-last-child(2) a:after {
     height: 16px;
     margin-right: 4px;
   }
+#my-pic {
+    position: relative;
+}
+
+.avatar-hint {
+    position: absolute;
+    top: -28px;
+    right: -56px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    pointer-events: none;
+    z-index: 12;
+    animation: avatarHintFloat 3.2s ease-in-out infinite;
+}
+
+.avatar-hint-img {
+    width: 84px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 10px rgba(15, 23, 42, 0.22));
+}
+
+
+@keyframes avatarHintFloat {
+    0% {
+        transform: translateY(0px) rotate(-1.5deg);
+    }
+    50% {
+        transform: translateY(-4px) rotate(0.5deg);
+    }
+    100% {
+        transform: translateY(0px) rotate(-1.5deg);
+    }
+}
+@media screen and (max-width: 800px) {
+    .avatar-hint {
+        top: -16px;
+        right: -30px;
+    }
+
+    .avatar-hint-img {
+        width: 72px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .avatar-hint {
+        display: none;
+    }
+}
