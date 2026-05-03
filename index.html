@@ -33,7 +33,7 @@
   <meta name="keywords" lang="en" content="Jun CEN" />
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
   <link rel="shortcut icon" href="images/favicon.svg">
-  <link rel="stylesheet" href="main.css?v=20260502-6">
+  <link rel="stylesheet" href="main.css?v=20260503-13">
   <link rel="stylesheet" href="css/custom.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/academicons.css"/>
@@ -323,6 +323,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p>
       I am currently a Ph.D. student in the <a href="https://fudan-datanet.mysxl.cn/" target="_blank" rel="noopener noreferrer">DataNET Group</a> at the <a href="https://ai.fudan.edu.cn/" target="_blank" rel="noopener noreferrer">College of Computer Science and Artificial Intelligence, Fudan University</a>, advised by <a href="https://chenyang03.wordpress.com/" target="_blank" rel="noopener noreferrer">Prof. Yang Chen</a> and <a href="https://faculty.fudan.edu.cn/wangxin/zh_CN" target="_blank" rel="noopener noreferrer">Prof. Xin Wang</a>.
       I received my B.Eng. degree in Water Supply and Drainage Science and Engineering from the <a href="https://sese.tongji.edu.cn/" target="_blank" rel="noopener noreferrer">School of Environmental Science and Engineering, Tongji University</a>, in 2024.<br>
+      Recently, I have been working on <strong class="llm-emphasis">LLM agents</strong>, with a focus on agent post-training and long-horizon reasoning, in close collaboration with <a href="https://gudehhh666.github.io/" target="_blank" rel="noopener noreferrer">Xinming Wang</a>. If you are interested in chatting with me, feel free to drop me an <a href="mailto:hrdu24@m.fudan.edu.cn">email</a>.
     </p>
 
     <div style="width: 50%; float:left">
@@ -343,6 +344,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="interest-paper-links">
             [<a class="interest-paper-link" href="#publications" data-paper-id="fusesampleagg">FuseSampleAgg</a>]
             [<a class="interest-paper-link" href="#publications" data-paper-id="tempotriads">TempoTriads</a>]
+            [<a class="interest-paper-link interest-repo-link" href="#codebase" data-repo-id="easygraph">EasyGraph</a>]
           </span>
         </li>
         <li><b>Foundation Agents</b></li>
@@ -569,6 +571,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   const showAllTopicBtn = document.getElementById('show-all-topic-btn');
   const topicLinks = document.querySelectorAll('.pub-topic-link');
   const interestPaperLinks = document.querySelectorAll('.interest-paper-link');
+  const interestRepoLinks = document.querySelectorAll('.interest-repo-link');
   const pubList = document.querySelector('.pub-list');
   const groupedView = document.getElementById('pub-grouped-view');
   const publications = document.querySelectorAll('.pub');
@@ -691,6 +694,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       });
     }
 
+    function highlightRepo(repoElement) {
+      if (!repoElement) return;
+      repoElement.classList.remove('repo-focus-flash');
+      void repoElement.offsetWidth;
+      repoElement.classList.add('repo-focus-flash');
+      window.setTimeout(function () {
+        repoElement.classList.remove('repo-focus-flash');
+      }, 3200);
+    }
+
+    function focusRepoInGithub(repoId) {
+      if (!repoId) return;
+      requestAnimationFrame(function () {
+        const selector = '.github-card[data-repo-id="' + repoId + '"]';
+        const targetRepo = document.querySelector(selector);
+        if (!targetRepo) return;
+        targetRepo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        highlightRepo(targetRepo);
+      });
+    }
+
     function setPublicationMode(mode) {
       setActiveMode(mode);
       if (mode === 'selected') {
@@ -734,9 +758,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     interestPaperLinks.forEach(function (link) {
       link.addEventListener('click', function (event) {
+        if (link.classList.contains('interest-repo-link')) return;
         event.preventDefault();
         const paperId = link.getAttribute('data-paper-id');
         focusPaperInTopicView(paperId);
+      });
+    });
+
+    interestRepoLinks.forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+        const repoId = link.getAttribute('data-repo-id');
+        focusRepoInGithub(repoId);
       });
     });
 
@@ -753,7 +786,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         GitHub
       </h1>
       <div class="card-container">
-        <div class="github-card">
+        <div class="github-card" data-repo-id="fedidata">
           <div>
             <a class="repo-link" href="https://github.com/FDUDataNET/FediData" target="_blank">
               FDUDataNET/<strong>FediData</strong>
@@ -769,6 +802,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <a href="https://github.com/FDUDataNET/FediData" target="_blank">Repository</a>
           </div>
         </div>
+
+        <div class="github-card" data-repo-id="easygraph">
+          <div>
+            <a class="repo-link" href="https://github.com/easy-graph/Easy-Graph" target="_blank">
+              easy-graph/<strong>Easy-Graph</strong>
+            </a>
+            <span class="label">Graph Library</span>
+          </div>
+          <div class="description">
+            A fast and easy-to-use graph analysis library for graph computing and learning research.
+          </div>
+          <div class="meta">
+            <div class="dot"></div>
+            <div>Python</div>
+            <a href="https://github.com/easy-graph/Easy-Graph" target="_blank">Repository</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -781,7 +831,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Selected Honors & Awards
     </h1>
     <ul>
-      <li>To be updated.</li>
+      <li>First Prize, The 6th ChineseCSCW Cup Big Data Analytics Competition, Chinese Computer Federation (CCF), Nov. 2025</li>
+      <li>First Prize, The 2nd OpenAtom Competition - OpenRank Cup Open Source Digital Ecosystem Analysis and Application Innovation Competition (OpenSODA), OpenAtom Foundation, May 2025</li>
+      <li>Tongji University Undergraduate Outstanding Student Scholarship, Tongji University, Dec. 2023</li>
+      <li>Excellence Award, National College Students' Open Class Showcase on Ideological and Political Theory Courses, Mar. 2023</li>
     </ul>
   </div>
 </div>
@@ -794,15 +847,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         Academic Services
       </h1>
       <ul>
-        <li>To be updated.</li>
+        <li><span class="service-label">Conference Reviewer</span>:</li>
+        <li>International Conference on Machine Learning (ICML)</li>
+        <li>The ACM Web Conference (WWW)</li>
       </ul>
     </div>
   </div>
 </div>
 
 <div style="display: flex; justify-content: center; align-items: center;">
-  <div style="max-width: 400px; width: 100%;">
-    <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=K9NLvpbM7GH1cTCvhvVlo4LW5p-d2mRZYw6UhrAFw0g&cl=ffffff&w=a"></script>
+  <div style="max-width: 320px; width: 100%;">
+    <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=G1WMXY6SRNIYxlgxf4GSeUsHgotMEuFukvN44gibelc"></script>
   </div>
 </div>
 
@@ -851,9 +906,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<div class="footer-col footer-col-3">
     	<!--<a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fwillhua127.github.io&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a> -->
 	<!-- <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?user=Lxe71v4AAAAJ&hl=en&url=https%3A%2F%2Fscholar.google.com%2Fcitations&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a> -->
-		<p class="text">Last updated: May 2026.<br>Style inspired by <a href="https://cen-jun.com/" target="_blank" rel="noopener noreferrer">this website</a>.</p>
+		<p class="text">Last updated: May 2026.<br>Style inspired by <a href="https://cen-jun.com/" target="_blank" rel="noopener noreferrer">cen-jun.com</a>, <a href="https://zqyuan.com/" target="_blank" rel="noopener noreferrer">zqyuan.com</a>, and <a href="https://www.hexianghu.com/" target="_blank" rel="noopener noreferrer">hexianghu.com</a>.</p>
 	</div>
   </div>
+  <p class="footer-quote">Viva la Vida.</p>
   </div>
 
 </footer>
@@ -878,6 +934,16 @@ jQuery(document).ready(function() {
         return false;
     })
 });
+</script>
+<script type="text/javascript">
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+  window.addEventListener("pageshow", function () {
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
+  });
 </script>
   </body>
 

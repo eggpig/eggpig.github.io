@@ -33,6 +33,16 @@ html {
     height: 100%
 }
 
+html {
+    scroll-behavior: smooth
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto
+    }
+}
+
 body {
     z-index: initial;
     font-family: "Roboto", Helvetica, Arial, sans-serif;
@@ -328,6 +338,17 @@ pre>code {
     width: calc(40% - (30px / 2))
 }
 
+.footer-quote {
+    margin: 8px 0 0;
+    width: 100%;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: #BE54FF;
+    text-align: center;
+    line-height: 1.2
+}
+
 @media screen and (max-width: 800px) {
 
     .footer-col-1,
@@ -339,6 +360,10 @@ pre>code {
     .footer-col-3 {
         width: -webkit-calc(100% - (30px / 2));
         width: calc(100% - (30px / 2))
+    }
+
+    .footer-quote {
+        font-size: 20px
     }
 }
 
@@ -1062,6 +1087,14 @@ pre>code {
 
 .text-center {
     text-align: center
+}
+
+.llm-emphasis {
+    font-weight: 900
+}
+
+.service-label {
+    font-weight: 600
 }
 
 hr.soft {
@@ -1922,6 +1955,8 @@ div.paginate-container li:nth-last-child(2) a:after {
     /* float: left !important; */
     margin-top: 5px;
     margin-bottom: 15px;
+    padding: 10px 16px;
+    box-sizing: border-box;
     /* padding-top: 15px; */
     overflow: auto
 }
@@ -1934,17 +1969,17 @@ div.paginate-container li:nth-last-child(2) a:after {
 @keyframes pubFocusFlash {
     0% {
         background-color: rgba(190, 170, 219, 0.42);
-        box-shadow: 0 0 0 0 rgba(190, 170, 219, 0.56)
+        box-shadow: inset 0 0 0 1px rgba(190, 170, 219, 0.56)
     }
 
     20% {
         background-color: rgba(190, 170, 219, 0.30);
-        box-shadow: 0 0 0 12px rgba(190, 170, 219, 0.28)
+        box-shadow: inset 0 0 0 2px rgba(190, 170, 219, 0.42)
     }
 
     100% {
         background-color: rgba(190, 170, 219, 0.00);
-        box-shadow: 0 0 0 20px rgba(190, 170, 219, 0.00)
+        box-shadow: inset 0 0 0 0 rgba(190, 170, 219, 0.00)
     }
 }
 
@@ -2010,6 +2045,11 @@ div.paginate-container li:nth-last-child(2) a:after {
     font-size: 16px;
     line-height: 1.45;
     color: #222
+}
+
+.pub-right>.authors b,
+.pub-right>.authors strong {
+    font-weight: 800
 }
 
 .pub-right>.authors>.author {
@@ -2386,6 +2426,25 @@ div.paginate-container li:nth-last-child(2) a:after {
     width: 16px;
     height: 16px;
     margin-right: 4px;
+  }
+
+  .repo-focus-flash {
+    animation: repoFocusFlash 3.2s ease-out 1;
+  }
+
+  @keyframes repoFocusFlash {
+    0% {
+      background-color: rgba(190, 170, 219, 0.42);
+      box-shadow: inset 0 0 0 1px rgba(190, 170, 219, 0.56);
+    }
+    20% {
+      background-color: rgba(190, 170, 219, 0.30);
+      box-shadow: inset 0 0 0 2px rgba(190, 170, 219, 0.42);
+    }
+    100% {
+      background-color: rgba(190, 170, 219, 0.00);
+      box-shadow: inset 0 0 0 0 rgba(190, 170, 219, 0.00);
+    }
   }
 #my-pic {
     position: relative;
